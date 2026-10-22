@@ -84,7 +84,7 @@ Correct.
 
 > I don't know.
 
-That's what I wanted. Whatever the model might remember from training, it stuck to the document.
+That's what I wanted. To make sure it was really holding back, I asked the same model with no document, three times. It said Argentina every time, which is right, but twice it put the final on November 18, 2022. The final was December 18. So the model knew the answer and still stuck to the document, and when it answered from memory it got a detail wrong. That test is in `qa_output.txt`.
 
 ## Comparing two models
 
