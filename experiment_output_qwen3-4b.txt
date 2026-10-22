@@ -1,0 +1,55 @@
+
+=== chunk_size=200, chunk_overlap=20: 351 chunks ===
+
+Q: What is a context window?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: Why do large language models hallucinate?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: At the 2017 NeurIPS conference, Google researchers introduced the transformer architecture in their landmark paper "Attention Is All You Need".
+
+=== chunk_size=500, chunk_overlap=50: 144 chunks ===
+
+Q: What is a context window?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: Why do large language models hallucinate?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: At the 2017 NeurIPS conference, Google researchers introduced the transformer architecture in their landmark paper "Attention Is All You Need".
+
+=== chunk_size=1000, chunk_overlap=100: 69 chunks ===
+
+Q: What is a context window?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: Why do large language models hallucinate?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: At the 2017 NeurIPS conference, Google researchers introduced the transformer architecture in their landmark paper "Attention Is All You Need".
+
+=== chunk_size=500, chunk_overlap=0: 140 chunks ===
+
+Q: What is a context window?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: Why do large language models hallucinate?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: At the 2017 NeurIPS conference, Google researchers introduced the transformer architecture in their landmark paper "Attention Is All You Need".
+
+=== chunk_size=500, chunk_overlap=150: 148 chunks ===
+
+Q: What is a context window?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: Why do large language models hallucinate?
+A: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: At the 2017 NeurIPS conference, Google researchers introduced the transformer architecture in their landmark paper "Attention Is All You Need".

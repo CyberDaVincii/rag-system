@@ -1,0 +1,55 @@
+
+=== chunk_size=200, chunk_overlap=20: 351 chunks ===
+
+Q: What is a context window?
+A: A context window is the segment of text that a language model considers when generating a response. It defines the maximum number of tokens (words or subwords) that the model can use to understand and process the input before producing an output. For example, GPT-2 has a context window of only 1k tokens, meaning it can only consider up to 1,000 tokens of text for its internal processing. The context window determines the scope of the input text that is relevant to each token, and the attention mechanism helps identify which tokens are most relevant to each other within this window.
+
+Q: Why do large language models hallucinate?
+A: I don't know.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: The transformer architecture was introduced in 2017 in the paper "Attention Is All You Need."
+
+=== chunk_size=500, chunk_overlap=50: 144 chunks ===
+
+Q: What is a context window?
+A: A context window is the number of tokens that an LLM considers when processing input. It defines the segment of text that is available to the model for context, and within this window, the attention mechanism calculates "soft" weights for each token to determine relevance. For example, in the GPT-2 model, the context window is 1k tokens, meaning the model can process up to 1,000 tokens of input at a time. The context for a given token depends on the model type: in autoregressive models, it is the text before the token; in masked models, it is the text surrounding the token.
+
+Q: Why do large language models hallucinate?
+A: Hallucinations in large language models arise partly through memorization of training data combined with extrapolation beyond factual boundaries. Evaluations have shown that models can output verbatim passages from training data when subjected to specific prompting sequences. This results in syntactically fluent text that appears factually sound but is internally inconsistent with training data or factually incorrect.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: The transformer architecture was introduced in 2017 in the paper "Attention Is All You Need."
+
+=== chunk_size=1000, chunk_overlap=100: 69 chunks ===
+
+Q: What is a context window?
+A: A context window is the number of tokens that a language model considers when processing a sequence of text. For a given token, the "context" depends on the model type: in autoregressive models, it is the segment of text that appears before the token; in masked models, it is the segment surrounding the token. The context window defines the scope of the text that the model uses to compute attention weights and make predictions. For example, the small GPT-2 model has a context window of 1k tokens.
+
+Q: Why do large language models hallucinate?
+A: Large language models hallucinate because they generate syntactically fluent text that appears factually sound but is internally inconsistent with training data or factually incorrect. This occurs partly through memorization of training data combined with extrapolation beyond factual boundaries. Evaluations have shown that models can output verbatim passages from training data when subjected to specific prompting sequences.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: The transformer architecture was introduced in 2017 in the paper "Attention Is All You Need."
+
+=== chunk_size=500, chunk_overlap=0: 140 chunks ===
+
+Q: What is a context window?
+A: A context window is the number of tokens in the text corpus that an LLM considers when processing input. The "context for token i" depends on the specific type of LLM—either the segment of text appearing before token i (in autoregressive models) or the segment surrounding token i (in masked models). The attention mechanism within the transformer architecture enables the model to process relationships between all elements in a sequence within this context window simultaneously.
+
+Q: Why do large language models hallucinate?
+A: Large language models hallucinate because they generate syntactically fluent text that appears factually sound but is internally inconsistent with training data or factually incorrect. This occurs partly through memorization of training data combined with extrapolation beyond factual boundaries. Evaluations have shown that models can output verbatim passages from training data when subjected to specific prompting sequences.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: The transformer architecture was introduced in 2017 in the paper "Attention Is All You Need."
+
+=== chunk_size=500, chunk_overlap=150: 148 chunks ===
+
+Q: What is a context window?
+A: A context window is the number of tokens that an LLM considers when processing input. It defines the segment of text that is used as context for a given token, and the attention mechanism calculates "soft" weights for each token based on its relevance within this window. For example, in the GPT-2 model, the context window is 1k tokens, meaning it processes up to 1,000 tokens at a time.
+
+Q: Why do large language models hallucinate?
+A: Large language models hallucinate because they generate syntactically fluent text that appears factually sound but is internally inconsistent with training data or factually incorrect. These hallucinations arise partly through memorization of training data combined with extrapolation beyond factual boundaries. Evaluations have shown that models can output verbatim passages from training data when subjected to specific prompting sequences.
+
+Q: When was the transformer architecture introduced, and in which paper?
+A: The transformer architecture was introduced in 2017 in the paper "Attention Is All You Need."

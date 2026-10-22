@@ -1,0 +1,25 @@
+### qwen3:4b-instruct (the answers used in the README)
+Loaded 144 chunks. Ask a question, or type exit or quit to stop.
+
+Your question: Answer: A context window is the number of tokens that an LLM considers when processing input. It defines the segment of text that is used as context for a given token, and within this window, the attention mechanism calculates "soft" weights for each token to determine relevance. For example, in a model with a context window of 1k tokens, the model only considers the most recent 1,000 tokens when processing a new token. This window limits the amount of historical information the model can access and use to generate responses.
+
+Your question: Answer: Large language models hallucinate because they generate syntactically fluent text that appears factually sound but is internally inconsistent with training data or factually incorrect. This occurs partly through memorization of training data combined with extrapolation beyond factual boundaries. Evaluations have shown that models can output verbatim passages from training data when subjected to specific prompting sequences.
+
+Your question: Answer: The transformer architecture was introduced in 2017 in the paper "Attention Is All You Need."
+
+Your question: Answer: I don't know.
+
+Your question: 
+
+### qwen3:4b (as specified in the assignment)
+Loaded 144 chunks. Ask a question, or type exit or quit to stop.
+
+Your question: Answer: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Your question: Answer: No answer: Qwen used its whole num_predict budget reasoning before it reached an answer. Raise num_predict, or set llm_model to a non-thinking model such as qwen3:4b-instruct.
+
+Your question: Answer: At the 2017 NeurIPS conference, Google researchers introduced the transformer architecture in their landmark paper "Attention Is All You Need".
+
+Your question: Answer: I don't know.
+
+Your question: 

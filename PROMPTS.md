@@ -1,46 +1,56 @@
 # Prompts used
 
-Each section of the code was generated from the assignment's prompts, in this order, and pasted at the bottom of the program as it grew. Where I changed or added to the generated code, the change is listed under the prompt.
+The code was generated from the assignment's two prompts, then checked by running it. Changes made after checking are listed under each prompt.
 
-## text_extractor.py
+## text_extractor_web.py
 
-**2.2 Web scraper.** Write a Python function that fetches the page at a specific URL (hardcoded in the script). The script should use the requests library to retrieve the page, parse it with BeautifulSoup, extract all `<p>` tags located within a `<div class="mw-parser-output">`, join their text with blank lines, write the result to a file called Selected_Document.txt encoded in UTF-8, print a success or failure message depending on the HTTP status code, and return the extracted text. Include a main() function that calls the scraping function using the hardcoded URL, and an `if __name__ == '__main__':` block that runs the script when executed.
+> Write a complete Python script named text_extractor_web.py. Use requests to fetch a hardcoded page URL and Beautiful Soup to parse the HTML. Extract the main readable article text: use the `<article>` element when present; if it isn't present, try the page's main-content container (for Wikipedia, `#mw-content-text .mw-parser-output`). Extract headings, paragraphs, and list items, joining them with blank lines. Save the text to Selected_Document.txt using UTF-8 encoding. Handle request errors, unsuccessful HTTP status codes, and missing or empty article content with clear messages. Return the extracted text on success. Include a main() function and an `if __name__ == "__main__":` block.
 
-- Added: a User-Agent header (Wikipedia returned HTTP 403 without one).
-- Changed: paragraph text is read with `get_text()` and whitespace-collapsed, not `get_text(strip=True)`, which glued linked words together.
-- Added: footnote markers are removed before extraction.
+Changes after checking the output:
 
-## RAG_app.py
+- Added a User-Agent header. Wikipedia refused the request with HTTP 403 without one.
+- Removed page furniture before extracting: footnote markers like `[1]`, the `[edit]` links beside headings, the reference list, navigation boxes and sidebars. Extraction stops at the "See also" or "References" heading, because everything after it is links and citations, not article text.
+- Each element is read with `get_text(" ")` and its whitespace collapsed, then stray spaces around brackets and punctuation are removed. Reading with `get_text(strip=True)` instead glues linked words to their neighbors.
+- Nested list items are skipped, because their text is already included in the parent item.
 
-**3.1 Suppress noisy logs.** Import logging, transformers.logging (as hf_logging), and warnings; set the log level of langchain.text_splitter and transformers to ERROR, and filter Python warnings.
+## rag_app.py
 
-**3.2 ChatGPT API credentials.** Use python-dotenv to load environment variables from a .env file and read OPENAI_API_KEY into openai.api_key.
+> Write a complete Python script named rag_app.py for a local Retrieval-Augmented Generation (RAG) application.
+>
+> Put all adjustable parameters together near the beginning of the script, before the functions:
+>
+> ```
+> chunk_size = 500
+> chunk_overlap = 50
+> embedding_model_name = "sentence-transformers/all-distilroberta-v1"
+> reranker_model_name = "cross-encoder/ms-marco-MiniLM-L-6-v2"
+> top_k = 20
+> top_m = 8
+> llm_model = "qwen3:4b"
+> ollama_url = "http://localhost:11434/api/chat"
+> ```
+>
+> Use Selected_Document.txt as the source document. Split its text with RecursiveCharacterTextSplitter, using chunk_size and chunk_overlap. Use the Sentence Transformers embedding model to embed the document chunks and user questions. Store the chunk embeddings in a local FAISS IndexFlatL2 index.
+>
+> When a user asks a question, retrieve up to top_k candidate chunks from FAISS. Use the cross-encoder to rerank the candidates and keep the top_m highest-scoring chunks. Remove duplicate chunks while preserving their order.
+>
+> Generate answers by sending the question and reranked chunks as context to the Ollama chat API at ollama_url, using the model named by llm_model. Set "stream": False, "think": False, and "options": {"num_predict": 500}. Instruct Qwen to answer only from the supplied context and to say it does not know if the context does not contain the answer. Do not use the OpenAI SDK, an API key, or a .env file.
+>
+> Include clear error handling for a missing or empty source document, Ollama connection or HTTP errors, and an empty model response. Suppress noisy library logs using logging, transformers.logging, and warnings.
+>
+> Organize the script into functions for loading and splitting the document, building the FAISS index, retrieving and reranking chunks, and generating answers. Add an interactive loop that accepts questions until the user enters exit or quit, ignoring letter case. Skip blank input.
+>
+> Include the correct Python main guard: `if __name__ == "__main__":`
+>
+> Return the complete script in one Python code block, with no partial snippets.
 
-**3.3 Parameters.** chunk_size = 500, chunk_overlap = 50, model_name = "sentence-transformers/all-distilroberta-v1", top_k = 20; re-ranking: cross_encoder_name = "cross-encoder/ms-marco-MiniLM-L-6-v2", top_m = 8.
+Changes after checking:
 
-**3.4 Read the pre-scraped document.** Open Selected_Document.txt in UTF-8 mode and read its contents into a variable text.
-
-**3.5 Split into chunks.** Import and use RecursiveCharacterTextSplitter with separators `["\n\n", "\n", " ", ""]` and the chunk_size and chunk_overlap above to split text into a list chunks.
-
-- Changed: imported from `langchain_text_splitters`, the package the requirements install; the older `langchain.text_splitter` path is deprecated.
-
-**3.6 Embed and build the FAISS index.** Load SentenceTransformer(model_name), encode chunks with the progress bar hidden, convert to a NumPy float32 array, create a FAISS IndexFlatL2 with the right dimension, and add the array.
-
-**3.7 Retrieval function.** retrieve_chunks(question, k=top_k): encode the question with the embedder, convert to float32, search faiss_index for the k nearest neighbors, and return the matching chunks. Variable names q_vec, q_arr, I.
-
-- Added: skip index -1, which FAISS returns when k is larger than the number of chunks. That never happens with this document, but it would with one under about 20 chunks, like the RAG article I tried first.
-
-**3.8 Cross-encoder re-ranker.** Initialize CrossEncoder(cross_encoder_name); write dedupe_preserve_order(items), which removes duplicates while keeping order and normalizing whitespace; write rerank_chunks(question, candidate_chunks, m=top_m), which scores (question, chunk) pairs with reranker.predict, sorts by score, keeps the top m, and dedupes. No bi-encoder calls inside.
-
-**3.9 Q&A with ChatGPT.** answer_question(question): retrieve_chunks, then rerank_chunks, join the kept chunks with blank lines into a context, use the given system prompt, build the user prompt "Context: ... Question: ... Answer:", and call Chat Completions with model="gpt-5", temperature=0.0, max_tokens=500.
-
-- Added: if the API rejects temperature or max_tokens for this model, retry once with max_completion_tokens.
-- Added: if the API call fails entirely, the same prompts go to a local model, Qwen2.5-1.5B-Instruct, with greedy decoding. The course key returned "You have no credits remaining" (HTTP 429), so every answer in this repository came from the local model. See the reflection.
-
-**3.10 Interactive loop.** Under `if __name__ == "__main__":`, print the exit instructions and loop on input until the user types exit or quit, printing answer_question for each question.
-
-- Added: `--experiment` flag that runs Step 4.1, rebuilding the chunks and index at five settings and answering the questions in questions.txt at each one.
+- Added `--experiment` mode for Step 6. It rebuilds the chunks and the index at five settings and answers the questions in questions.txt at each one, so the comparison is reproducible from one command.
+- Retrieval asks FAISS for `min(top_k, number of chunks)` results, so a document shorter than 20 chunks does not return empty slots.
 
 ## Reflection
 
-**4.2 Deep-dive questions.** "Generate five important questions to understand this RAG system, about embedding dimensionality, FAISS search behavior, chunk overlap, and prompt design, and answer each from this code and document." Every number in the answers was measured by running the code.
+> Generate five conceptual questions about this RAG system (embedding dimensions, FAISS distance search, chunk overlap, reranking, and prompt design) and answer them from this code and this document.
+
+Every number in the answers was measured by running the code, not taken from the AI's description of it.
